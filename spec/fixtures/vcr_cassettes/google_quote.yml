@@ -1,0 +1,26 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :get
+    uri: http://download.finance.yahoo.com:80/d/quotes.csv?s=GOOG&f=l1p2&e=.csv
+    body: !!null 
+    headers: !!null 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 24 Aug 2011 19:57:42 GMT
+      p3p:
+      - policyref="http://p3p.yahoo.com/w3c/p3p.xml", CP="CAO DSP COR CUR ADM DEV
+        TAI PSA PSD IVAi IVDi CONi TELo OTPi OUR DELi SAMi OTRi UNRi PUBi IND PHY
+        ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE GOV"
+      cache-control:
+      - private
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/octet-stream
+    body: ! "523.57,\"+0.92%\"\r\n"
+    http_version: '1.1'
