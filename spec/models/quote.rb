@@ -2,19 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Quote do
   describe "instance methods" do
-    let(:quote) { Quote.new('GOOG', [:last_trade_price_only, :change_in_percent]) }
+    let(:quote) { Quote.new('GOOG') }
     
     describe "#initialze" do
       it "sets the symbol" do
         quote.symbol.should eql('GOOG')
-      end
-      
-      it "sets the properties" do
-        quote.properties.should eql([:last_trade_price_only, :change_in_percent])
-      end
-      
-      it "initializes the values to an empty hash" do
-        quote.values.should eql({})
       end
     end
     
@@ -25,13 +17,33 @@ describe Quote do
         end
       end
       
-      it "sets the requested values" do
-        quote.values[:last_trade_price_only].should eql('523.57')
-        quote.values[:change_in_percent].should eql('+0.92%')
-      end
+      google_quote = { 
+        symbol:                     'GOOG',
+        name:                       'Google Inc.',
+        last_trade_price_only:      '523.29',
+        last_trade_date:            '8/24/2011',
+        last_trade_time:            '4:00pm',
+        change_with_percent_change: '+4.47 - +0.86%',
+        change:                     '+4.47',
+        previous_close:             '518.82',
+        change_in_percent:          '+0.86%',
+        open:                       '519.00',
+        day_low:                    '517.23',
+        day_high:                   '530.00',
+        volume:                     '3598264',
+        last_trade_with_time:       'Aug 24 - <b>523.29</b>',
+        day_range:                  '517.23 - 530.00',
+        ticker_trend:               '&nbsp;======&nbsp;',
+        ask:                        '550.00',
+        average_daily_volume:       '3748470',
+        bid:                        '512.09',
+        bid_size:                   '161.128'
+      }
       
-      it "does not set other values" do
-        quote.values[:open].should be_nil
+      google_quote.each do |property, value|
+        it "sets ''#{property}' to '#{value}'" do
+          quote.send(property).should eql(value)
+        end
       end
     end
   end
