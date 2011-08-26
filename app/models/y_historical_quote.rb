@@ -1,5 +1,5 @@
 require 'csv'
-class HistoricalQuote
+class YHistoricalQuote
   
   attr_accessor :symbol, :from_date, :to_date, :interval, :values
   

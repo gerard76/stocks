@@ -1,0 +1,17 @@
+= javascript_include_tag "amstock.js"
+
+#flashcontent
+  %strong You need to upgrade your Flash Player
+
+:javascript
+  var so = new SWFObject("/amstock/amstock.swf", "amstock", "800", "500", "8", "#FFFFFF");
+  so.addVariable("path", "/quotes/#{@quotes.first.symbol}/");
+  so.addVariable("settings_file", encodeURIComponent("/amstock/settings.xml"));
+  so.addVariable("preloader_color", "#999999");
+  //  so.addVariable("chart_settings", "");
+  //  so.addVariable("additional_chart_settings", "");
+  //  so.addVariable("loading_settings", "Loading settings");
+  //  so.addVariable("error_loading_file", "ERROR LOADING FILE: ");
+  
+  so.write("flashcontent");
+  

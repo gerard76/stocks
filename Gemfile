@@ -4,6 +4,9 @@ gem 'rails', '3.0.9'
 gem 'sqlite3'
 
 gem 'chronic'
+gem 'haml'
+
+gem 'itslog'
 
 group :test do
   gem 'rspec-rails'

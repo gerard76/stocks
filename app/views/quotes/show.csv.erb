@@ -1,0 +1,3 @@
+<%- @quotes.each do |quote| -%>
+<%= "#{quote.date.strftime("%Y-%m-%d")},#{quote.open},#{quote.high},#{quote.low},#{quote.close}" %>
+<%- end -%>
