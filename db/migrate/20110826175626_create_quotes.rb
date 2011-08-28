@@ -4,10 +4,10 @@ class CreateQuotes < ActiveRecord::Migration
       t.string  :symbol
       t.string  :name
       t.date    :date
-      t.decimal :open
-      t.decimal :close
-      t.decimal :high
-      t.decimal :low
+      t.decimal :open, :scale => 2, :precision => 10
+      t.decimal :close, :scale => 2, :precision => 10
+      t.decimal :high, :scale => 2, :precision => 10
+      t.decimal :low, :scale => 2, :precision => 10
       t.timestamps
     end
     

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe SlimQuote do
+describe YQuote do
   describe "instance methods" do
-    let(:quote) { Quote.new('GOOG', [:last_trade_price_only, :change_in_percent]) }
+    let(:quote) { YQuote.new('GOOG', [:last_trade_price_only, :change_in_percent]) }
     
     describe "#initialze" do
       it "sets the symbol" do

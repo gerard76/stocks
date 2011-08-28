@@ -1,6 +1,6 @@
 require 'csv'
 
-class SlimQuote
+class YQuote
   PROPERTIES = {
     symbol:                     's',
     name:                       'n',

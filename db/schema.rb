@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(:version => 20110826175626) do
     t.string   "symbol"
     t.string   "name"
     t.date     "date"
-    t.decimal  "open"
-    t.decimal  "close"
-    t.decimal  "high"
-    t.decimal  "low"
+    t.decimal  "open",       :precision => 10, :scale => 2
+    t.decimal  "close",      :precision => 10, :scale => 2
+    t.decimal  "high",       :precision => 10, :scale => 2
+    t.decimal  "low",        :precision => 10, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
