@@ -1,0 +1,32 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :get
+    uri: http://ichart.yahoo.com:80/table.csv?s=GOOG&g=d&ignore=.csv&a=4&b=16&c=2011&d=4&e=17&f=2011
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Fri, 26 Aug 2011 12:10:46 GMT
+      p3p:
+      - policyref="http://info.yahoo.com/w3c/p3p.xml", CP="CAO DSP COR CUR ADM DEV
+        TAI PSA PSD IVAi IVDi CONi TELo OTPi OUR DELi SAMi OTRi UNRi PUBi IND PHY
+        ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC GOV"
+      cache-control:
+      - private
+      transfer-encoding:
+      - chunked
+      content-type:
+      - text/csv
+    body: ! 'Date,Open,High,Low,Close,Volume,Adj Close
+
+      2011-05-17,515.43,531.22,515.03,530.46,3303600,530.46
+
+      2011-05-16,526.31,527.27,516.40,518.42,2958200,518.42
+
+'
+    http_version: '1.1'

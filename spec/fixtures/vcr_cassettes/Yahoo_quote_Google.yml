@@ -2,7 +2,7 @@
 - !ruby/struct:VCR::HTTPInteraction
   request: !ruby/struct:VCR::Request
     method: :get
-    uri: http://download.finance.yahoo.com:80/d/quotes.csv?s=GOOG&f=snl1d1t1cc1pp2oghvlmt7aa2bb4&e=.csv
+    uri: http://download.finance.yahoo.com:80/d/quotes.csv?s=GOOG&f=l1p2&e=.csv
     body: 
     headers: 
   response: !ruby/struct:VCR::Response
@@ -11,7 +11,7 @@
       message: OK
     headers:
       date:
-      - Thu, 25 Aug 2011 06:42:45 GMT
+      - Fri, 26 Aug 2011 12:10:47 GMT
       p3p:
       - policyref="http://p3p.yahoo.com/w3c/p3p.xml", CP="CAO DSP COR CUR ADM DEV
         TAI PSA PSD IVAi IVDi CONi TELo OTPi OUR DELi SAMi OTRi UNRi PUBi IND PHY
@@ -22,6 +22,5 @@
       - chunked
       content-type:
       - application/octet-stream
-    body: ! "\"GOOG\",\"Google Inc.\",523.29,\"8/24/2011\",\"4:00pm\",\"+4.47 - +0.86%\",+4.47,518.82,\"+0.86%\",519.00,517.23,530.00,3598264,\"Aug
-      24 - <b>523.29</b>\",\"517.23 - 530.00\",\"&nbsp;======&nbsp;\",550.00,3748470,512.09,161.128\r\n"
+    body: ! "520.04,\"0.00%\"\r\n"
     http_version: '1.1'

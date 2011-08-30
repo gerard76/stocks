@@ -109,7 +109,7 @@ DEPENDENCIES
   ffaker
   haml
   itslog
-  mysql2 (~> 0.2.8)
+  mysql2
   rails (= 3.0.9)
   rspec-rails
   shoulda

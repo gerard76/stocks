@@ -10,20 +10,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110826175626) do
+ActiveRecord::Schema.define(:version => 20110825140213) do
 
   create_table "quotes", :force => true do |t|
     t.string   "symbol"
     t.string   "name"
-    t.date     "date"
-    t.decimal  "open",       :precision => 10, :scale => 2
-    t.decimal  "close",      :precision => 10, :scale => 2
-    t.decimal  "high",       :precision => 10, :scale => 2
-    t.decimal  "low",        :precision => 10, :scale => 2
+    t.decimal  "price",                :precision => 10, :scale => 2
+    t.datetime "date"
+    t.decimal  "low",                  :precision => 10, :scale => 2
+    t.decimal  "high",                 :precision => 10, :scale => 2
+    t.decimal  "open",                 :precision => 10, :scale => 2
+    t.decimal  "close",                :precision => 10, :scale => 2
+    t.decimal  "ask",                  :precision => 10, :scale => 2
+    t.decimal  "bid",                  :precision => 10, :scale => 2
+    t.decimal  "bid_size",             :precision => 10, :scale => 2
+    t.integer  "volume"
+    t.integer  "average_daily_volume"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "quotes", ["symbol", "date"], :name => "index_quotes_on_symbol_and_date"
+  add_index "quotes", ["symbol", "date"], :name => "index_quotes_on_symbol_and_date", :unique => true
 
 end

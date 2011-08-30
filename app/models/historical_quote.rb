@@ -22,4 +22,10 @@ class HistoricalQuote
     end
     self
   end
+  
+  def save_quotes
+    quotes.each do |quote|
+      quote.save
+    end
+  end
 end

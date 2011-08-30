@@ -1,4 +1,4 @@
-class Quotes < Quote
+class YahooQuotes < YahooQuote
   
   attr_accessor :symbols, :properties, :values
    
