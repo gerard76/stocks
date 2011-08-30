@@ -1,4 +1,6 @@
 require 'csv'
+require 'net/http'
+
 class YHistoricalQuote
   
   attr_accessor :symbol, :from_date, :to_date, :interval, :quotes
