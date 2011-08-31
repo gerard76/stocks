@@ -19,8 +19,8 @@ class Quote < ActiveRecord::Base
     (change / previous_close * 100).round(2)
   end
   
-  def simple_moving_average(period, attribute = :close)
-    previous_quotes(period).map(&attribute).mean
+  def simple_moving_average(period)
+    previous_quotes(period)[:close].mean
   end
   
   def exponential_moving_average(period, attribute = :close)

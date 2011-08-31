@@ -5,8 +5,11 @@ gem 'mysql2' #, '~> 0.2.8'
 
 gem 'chronic'
 gem 'haml'
+gem 'valium'
 
-gem 'itslog'
+group :development do
+  gem 'itslog'
+end
 
 group :test do
   gem 'rspec-rails'
