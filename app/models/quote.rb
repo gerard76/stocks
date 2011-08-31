@@ -1,5 +1,6 @@
 class Quote < ActiveRecord::Base
-
+  extend ActiveSupport::Memoizable
+  
   ### VALIDATIONS:
   validates :symbol, presence: true, uniqueness: { scope: :date }
   
@@ -22,6 +23,7 @@ class Quote < ActiveRecord::Base
   def simple_moving_average(period)
     previous_quotes(period)[:close].mean
   end
+  memoize :simple_moving_average
   
   def exponential_moving_average(period, attribute = :close)
     multiplier = (2.to_f / period + 1)
@@ -52,6 +54,7 @@ class Quote < ActiveRecord::Base
     puts "best period: #{max_period}"
     max_period
   end
+  memoize :best_ma_period
   
   private
   
