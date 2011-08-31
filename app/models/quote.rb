@@ -25,12 +25,10 @@ class Quote < ActiveRecord::Base
   end
   memoize :simple_moving_average
   
-  def exponential_moving_average(period, attribute = :close)
-    multiplier = (2.to_f / period + 1)
-    
-    (close - yesterday.exponential_moving_average) * multiplier + yesterday.exponential_moving_average
-    
-    previous_quotes(period).map(&attribute)
+  def exponential_moving_average(period)
+    calculate_exponential_moving_average(previous_quotes(100 + period)[:close], period)
+  end
+  
   def best_ma_period(look_back_period, range_from = 5, range_to = 50)
     max_value, max_period = 0, 0
     previous = previous_quotes(look_back_period)
@@ -58,6 +56,13 @@ class Quote < ActiveRecord::Base
   
   private
   
+  def calculate_exponential_moving_average(quotes, period)
+    return quotes.mean if quotes.length == period
+    
+    multiplier = (2.to_f / period + 1)
+    quotes.pop * multiplier + calculate_exponential_moving_average(quotes, period) * (1 - multiplier)
+  end
+    
   def previous_quotes(period)
     Quote.where(symbol: symbol).where("date < ? AND date >= ?", date, date - period.days)
   end
