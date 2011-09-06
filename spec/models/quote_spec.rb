@@ -36,5 +36,28 @@ describe Quote do
         quote.trade_date.to_s.should eql("2010-02-13")
       end
     end
+    
+    describe "moving averages" do
+      before(:each) do
+        [22.27, 22.19, 22.08, 22.17, 22.18, 22.13, 22.23, 22.43, 22.24, 22.29].each_with_index do |close, index|
+          Factory(:quote, close: close, date: index.days.from_now)
+        end
+        
+        @quote = Quote.last
+      end
+      
+      describe "#simple_moving_average" do
+        it "returns the proper simple moving average" do
+         raise Quote.all.map(&:close).inspect
+          @quote.simple_moving_average(10).round(2).to_f.should eql(22.22)
+        end
+      end
+      
+      describe "#exponential_moving_average" do
+        it "returns the proper EMA" do
+          @quote.exponential_moving_average(10).round(2).to_f.should eql(22.22)
+        end
+      end
+    end
   end
 end
