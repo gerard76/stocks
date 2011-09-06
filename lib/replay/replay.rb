@@ -19,6 +19,10 @@ class Replay
     self.max[:profit], self.min[:profit] = 0, 0
   end
   
+  def self.run(*options)
+    new(*options).run
+  end
+  
   def run
     (from.year..till.year).each do |year|
       Quote.year(year).each do |quote|
