@@ -28,7 +28,7 @@ describe Quote do
         it "returns the SMA if there are no more quotes to trace back to" do
           quote = Quote.last
           
-          quote.last.exponential_moving_average(10).should eql(quote.simple_moving_average(10))
+          quote.exponential_moving_average(10).should eql(quote.simple_moving_average(10))
         end
         
         it "returns EMA if there are enough quotes" do
