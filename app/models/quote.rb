@@ -22,6 +22,10 @@ class Quote < ActiveRecord::Base
   end
   memoize :exponential_moving_average
   
+  def macd(short = 12, long = 26)
+    StockMath.macd(select_period(long + 100)[:close], short, long)
+  end
+  
   def best_sma_period(look_back_period, range_from = 5, range_to = 50)
     max_value, max_period = 0, 0
     previous = previous_quotes(look_back_period)
