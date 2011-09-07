@@ -11,32 +11,6 @@ describe Quote do
   end
   
   describe "instance methods" do
-    describe "#change" do
-      it "returns the change between last trade price and previous close" do
-        quote.trade_price = 520.04
-        quote.previous_close   = 523.29
-        
-        quote.change.should eql(-3.25)
-      end
-    end
-    
-    describe "#change_in_percent" do
-      it "returns the change in percent between the previous close and last trade price" do
-        quote.trade_price = 520.04
-        quote.previous_close   = 523.29
-        
-        quote.change_in_percent.should eql(-0.62)
-      end
-    end
-    
-    describe "#trade_date" do
-      it "returns the date portion of the trade time" do
-        quote.trade_time = DateTime.new(2010, 2, 13)
-        
-        quote.trade_date.to_s.should eql("2010-02-13")
-      end
-    end
-    
     describe "moving averages" do
       before(:each) do
         @closes = [22.27, 22.19, 22.08, 22.17, 22.18, 22.13, 22.23, 22.43, 22.24, 22.29]

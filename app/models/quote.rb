@@ -12,16 +12,7 @@ class Quote < ActiveRecord::Base
   scope :year, lambda { |year| where("YEAR(date) = #{year}") }
   
   ### INSTANCE METHODS
-  def change
-    trade_price - previous_close
-  end
-  
-  def change_in_percent
-    (change / previous_close * 100).round(2)
-  end
-  
   def simple_moving_average(period)
-    previous_quotes(period)[:close].map(&:to_f).mean
     select_period(period)[:close].map(&:to_f).map { |q| q.round(2) }.mean.round(2)
   end
   memoize :simple_moving_average
