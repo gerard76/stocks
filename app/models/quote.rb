@@ -22,11 +22,12 @@ class Quote < ActiveRecord::Base
   
   def simple_moving_average(period)
     previous_quotes(period)[:close].map(&:to_f).mean
+    select_period(period)[:close].map(&:to_f).map { |q| q.round(2) }.mean.round(2)
   end
   memoize :simple_moving_average
   
   def exponential_moving_average(period)
-    calculate_exponential_moving_average(previous_quotes(100 + period)[:close], period)
+    calculate_exponential_moving_average(select_period(100 + period)[:close], period)
   end
   memoize :exponential_moving_average
   
@@ -83,7 +84,7 @@ class Quote < ActiveRecord::Base
   private
   
   def calculate_exponential_moving_average(quotes, period)
-    return quotes.mean if quotes.length == period
+    return quotes.mean.round(2) if quotes.length == period
     
     multiplier = (2.to_f / period + 1)
     puts "#{quotes.map(&:to_f).inspect} - #{multiplier.to_f}"
@@ -94,8 +95,8 @@ class Quote < ActiveRecord::Base
     # quotes.pop * multiplier +  * (1 - multiplier)
   end
     
-  def previous_quotes(period)
-    Quote.where(symbol: symbol).where("date < ? AND date >= ?", date, date - period.days)
+  def select_period(period)
+    Quote.where(symbol: symbol).where("date <= ? AND date > ?", date, date - period.days)
   end
   
   def yesterday

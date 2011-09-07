@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Quote do
   
-  let(:quote) { Quote.new('GOOG') }
+  let(:quote) { Factory(:quote) }
   
   describe "validations" do
     it { should validate_presence_of(:symbol) }
     it { quote;
-         should validate_uniqueness_of(:symbol).scoped_to(:trade_time) }
+         should validate_uniqueness_of(:symbol).scoped_to(:date) }
   end
   
   describe "instance methods" do
@@ -39,7 +39,8 @@ describe Quote do
     
     describe "moving averages" do
       before(:each) do
-        [22.27, 22.19, 22.08, 22.17, 22.18, 22.13, 22.23, 22.43, 22.24, 22.29].each_with_index do |close, index|
+        @closes = [22.27, 22.19, 22.08, 22.17, 22.18, 22.13, 22.23, 22.43, 22.24, 22.29]
+        @closes.each_with_index do |close, index|
           Factory(:quote, close: close, date: index.days.from_now)
         end
         
@@ -48,14 +49,13 @@ describe Quote do
       
       describe "#simple_moving_average" do
         it "returns the proper simple moving average" do
-         raise Quote.all.map(&:close).inspect
-          @quote.simple_moving_average(10).round(2).to_f.should eql(22.22)
+          @quote.simple_moving_average(10).to_f.should eql(22.22)
         end
       end
       
       describe "#exponential_moving_average" do
         it "returns the proper EMA" do
-          @quote.exponential_moving_average(10).round(2).to_f.should eql(22.22)
+          @quote.exponential_moving_average(10).to_f.should eql(22.22)
         end
       end
     end
