@@ -13,12 +13,12 @@ class Quote < ActiveRecord::Base
   
   ### INSTANCE METHODS
   def simple_moving_average(period)
-    select_period(period)[:close].map(&:to_f).map { |q| q.round(2) }.mean.round(2)
+    StockMath.simple_moving_average(select_period(period)[:close], period)
   end
   memoize :simple_moving_average
   
   def exponential_moving_average(period)
-    calculate_exponential_moving_average(select_period(100 + period)[:close], period).to_f.round(2)
+    StockMath.exponential_moving_average(select_period(100 + period)[:close], period)
   end
   memoize :exponential_moving_average
   
@@ -73,23 +73,8 @@ class Quote < ActiveRecord::Base
   memoize :best_ema_period
   
   private
-  
-  def calculate_exponential_moving_average(quotes, period)
-    return quotes.mean.round(2) if quotes.length == period
-    
-    multiplier = (2.to_f / (period + 1))
-    
-    current = quotes.pop
-    previous = calculate_exponential_moving_average(quotes, period)
-    
-    (current - previous) * multiplier + previous
-  end
     
   def select_period(period)
     Quote.where(symbol: symbol).where("date <= ? AND date > ?", date, date - period.days)
-  end
-  
-  def yesterday
-    previous_quotes(1).first
   end
 end
