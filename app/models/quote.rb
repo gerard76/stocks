@@ -18,7 +18,8 @@ class Quote < ActiveRecord::Base
   memoize :simple_moving_average
   
   def exponential_moving_average(period)
-    calculate_exponential_moving_average(select_period(100 + period)[:close], period)
+    puts select_period(100 + period)[:close].inspect
+    calculate_exponential_moving_average(select_period(100 + period)[:close], period).to_f.round(2)
   end
   memoize :exponential_moving_average
   
