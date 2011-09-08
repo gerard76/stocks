@@ -1,7 +1,6 @@
 class StockMath
   class << self
     def exponential_moving_average(prices, period)
-      puts prices.map(&:to_f).map(&:round).inspect
       return simple_moving_average(prices, period) if prices.length <= period
       
       multiplier = (2.to_f / (period + 1))

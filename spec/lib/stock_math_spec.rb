@@ -22,6 +22,12 @@ describe StockMath do
         it "returns EMA if there are enough quotes" do
           StockMath.exponential_moving_average(@prices + [22.15, 22.39, 22.38], 10).should eql(22.27)
         end
+        
+        it "doesnt fuck up calculations for longer periods" do
+          @prices = @prices + [22.15, 22.39, 22.38, 22.61, 23.36, 24.05, 23.75, 23.83, 23.95, 23.63,
+                                23.82, 23.87, 23.65, 23.19, 23.10, 23.33, 22.68, 23.10, 22.40, 22.17]
+          StockMath.exponential_moving_average(@prices, 10).should eql(22.92)
+        end
       end
       
       describe "#macd" do

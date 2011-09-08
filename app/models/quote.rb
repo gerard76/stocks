@@ -22,6 +22,7 @@ class Quote < ActiveRecord::Base
   ### INSTANCE METHODS:
   
   def simple_moving_average(period)
+    puts select_period(period)[:close].map(&:to_f).inspect
     StockMath.simple_moving_average(select_period(period)[:close], period)
   end
   memoize :simple_moving_average
@@ -88,6 +89,6 @@ class Quote < ActiveRecord::Base
   private
     
   def select_period(period)
-    Quote.where(symbol: symbol).where("date <= ? AND date > ?", date, date - period.days)
+    Quote.unscoped.where(symbol: symbol).where("date <= ?", date).limit(period).order("date DESC").reverse
   end
 end
