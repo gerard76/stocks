@@ -28,6 +28,27 @@ describe StockMath do
                                 23.82, 23.87, 23.65, 23.19, 23.10, 23.33, 22.68, 23.10, 22.40, 22.17]
           StockMath.exponential_moving_average(@prices, 10).should eql(22.92)
         end
+        
+        context "with actual values" do
+          before(:all) do
+            VCR.use_cassette('aex_quote') do
+              h = HistoricalQuote.new('^aex', Time.new(2009, 1, 1), Time.new(2011, 9, 7))
+              h.fetch
+              h.save_quotes
+            end
+          end
+          
+          emas = { 12  => 282.52,
+                   26  => 289.95,
+                   100 => 319.39,
+                   200 => 331.22 }
+          
+          emas.each do |period, value|
+            it "returns #{value} for ema(#{period})" do
+              Quote.last.ema(period).should eql(value)
+            end
+          end
+        end
       end
       
       describe "#macd" do

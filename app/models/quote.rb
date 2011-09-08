@@ -11,29 +11,28 @@ class Quote < ActiveRecord::Base
   
   scope :year, lambda { |year| where("YEAR(date) = #{year}") }
   
-  ### CLASS METHODS:
+  ### INSTANCE METHODS:
   
-  def self.update_data
+  def update_data
     h = HistoricalQuote.new(symbol, Quote.last.date)
     h.fetch
     h.save_quotes
   end
   
-  ### INSTANCE METHODS:
-  
   def simple_moving_average(period)
-    puts select_period(period)[:close].map(&:to_f).inspect
-    StockMath.simple_moving_average(select_period(period)[:close], period)
+    StockMath.simple_moving_average(select_period(period), period)
   end
   memoize :simple_moving_average
+  alias :sma :simple_moving_average
   
   def exponential_moving_average(period)
-    StockMath.exponential_moving_average(select_period(100 + period)[:close], period)
+    StockMath.exponential_moving_average(select_period(3.5 * period + 50), period)
   end
   memoize :exponential_moving_average
+  alias :ema :exponential_moving_average
   
   def macd(short = 12, long = 26)
-    StockMath.macd(select_period(long + 100)[:close], short, long)
+    StockMath.macd(select_period(long + 100), short, long)
   end
   
   def best_sma_period(look_back_period, range_from = 5, range_to = 50)
@@ -89,6 +88,11 @@ class Quote < ActiveRecord::Base
   private
     
   def select_period(period)
-    Quote.unscoped.where(symbol: symbol).where("date <= ?", date).limit(period).order("date DESC").reverse
+    count = Quote.where(symbol: symbol).where("date <= ?", date).count
+    if count < period
+      raise "Not enough quotes for calculation! #{period} needed, got #{count}"
+    end
+    
+    Quote.unscoped.where(symbol: symbol).where("date <= ?", date).limit(period).order("date DESC")[:close].reverse
   end
 end

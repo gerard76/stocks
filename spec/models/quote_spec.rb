@@ -48,16 +48,16 @@ describe Quote do
           h.save_quotes
         end
         
-        @quotes = Quote.last.send(:select_period, 10)
+        @prices = Quote.last.send(:select_period, 10)
       end
       
       it "returns 10 elements" do
-        @quotes.should have(10).quotes
+        @prices.should have(10).prices
       end
       
       it "returns last 10 quotes" do
-        @quotes.last.date.strftime("%Y-%m-%d").should  eql("2011-09-07")
-        @quotes.first.date.strftime("%Y-%m-%d").should eql("2011-08-24")
+        @prices.last.to_f.should  eql(383.93)
+        @prices.first.to_f.should eql(376.18)
       end
     end
   end

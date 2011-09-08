@@ -5,9 +5,9 @@ class StockMath
       
       multiplier = (2.to_f / (period + 1))
       
-      new_prices = prices.dup
-      current = new_prices.pop
-      previous = exponential_moving_average(new_prices, period)
+      prices = prices.dup
+      current = prices.pop
+      previous = exponential_moving_average(prices, period)
       
       ((current - previous) * multiplier + previous).round(2)
     end
@@ -17,7 +17,7 @@ class StockMath
     end
     
     def macd(prices, short = 12, long = 26)
-      (exponential_moving_average(prices, long) - exponential_moving_average(prices, short)).round(2)
+      (exponential_moving_average(prices, short) - exponential_moving_average(prices, long)).round(2)
     end
   end
 end
