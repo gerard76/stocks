@@ -11,7 +11,16 @@ class Quote < ActiveRecord::Base
   
   scope :year, lambda { |year| where("YEAR(date) = #{year}") }
   
-  ### INSTANCE METHODS
+  ### CLASS METHODS:
+  
+  def self.update_data
+    h = HistoricalQuote.new(symbol, Quote.last.date)
+    h.fetch
+    h.save_quotes
+  end
+  
+  ### INSTANCE METHODS:
+  
   def simple_moving_average(period)
     StockMath.simple_moving_average(select_period(period)[:close], period)
   end
