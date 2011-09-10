@@ -32,30 +32,39 @@ describe StockMath do
         context "with actual values" do
           before(:all) do
             VCR.use_cassette('aex_quote') do
-              h = HistoricalQuote.new('^aex', Time.new(2009, 1, 1), Time.new(2011, 9, 7))
-              h.fetch
-              h.save_quotes
+              h = HistoricalQuote.new('^aex', Time.new(2008, 1, 1), Time.new(2011, 9, 7)).fetch
+              @quotes = h.quotes.map(&:close).map { |c| c.to_f.round(2) }.reverse
             end
           end
           
           emas = { 12  => 282.52,
                    26  => 289.95,
-                   100 => 319.39,
-                   200 => 331.22 }
+                   100 => 319.41,
+                   200 => 331.22
+                  }
           
           emas.each do |period, value|
             it "returns #{value} for ema(#{period})" do
-              Quote.last.ema(period).should eql(value)
+              StockMath.exponential_moving_average(@quotes, period).should eql(value)
             end
           end
+        end
+        
+        it "has an alias named #ema" do
+          StockMath.method(:exponential_moving_average).should eql(StockMath.method(:ema))
         end
       end
       
       describe "#macd" do
+        before(:all) do
+          VCR.use_cassette('aex_quote') do
+            h = HistoricalQuote.new('^aex', Time.new(2008, 1, 1), Time.new(2011, 9, 7)).fetch
+            @quotes = h.quotes.map(&:close).map { |c| c.to_f.round(2) }.reverse
+          end
+        end
+        
         it "returns the MACD value for given periods" do
-          # 2: 22.29
-          # 8: 22.24
-          StockMath.macd(@prices, 2, 8).should eql(-0.05)
+          StockMath.macd(@quotes, 12, 26).should eql(-7.43)
         end
       end
     end

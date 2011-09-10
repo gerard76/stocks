@@ -26,7 +26,7 @@ class Quote < ActiveRecord::Base
   alias :sma :simple_moving_average
   
   def exponential_moving_average(period)
-    StockMath.exponential_moving_average(select_period(3.5 * period + 50), period)
+    StockMath.exponential_moving_average(select_period(5 * period), period)
   end
   memoize :exponential_moving_average
   alias :ema :exponential_moving_average
