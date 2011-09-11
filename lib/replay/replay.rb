@@ -64,7 +64,7 @@ class Replay
     self.sell_count += 1
     store_statistics
     
-    puts "SELL on #{current_quote.date} for #{current_quote.close}. Delta: #{current_quote.close - self.last_buy_price}"
+    puts "SELL on #{current_quote.date} for #{current_quote.close}. Delta: #{(((current_quote.close - last_buy_price) / last_buy_price) * 100).round(2)}%"
   end
   
   def result
