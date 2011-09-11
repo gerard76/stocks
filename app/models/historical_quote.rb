@@ -14,7 +14,7 @@ class HistoricalQuote
       quote = Quote.new(symbol: symbol,
                         date:   y_quote.values[:date],
                         open:   y_quote.values[:open].to_f,
-                        close:  y_quote.values[:close].to_f,
+                        close:  y_quote.values[:adjusted_close].to_f,
                         high:   y_quote.values[:high].to_f,
                         low:    y_quote.values[:low].to_f
               )
