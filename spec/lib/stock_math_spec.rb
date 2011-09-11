@@ -9,8 +9,12 @@ describe StockMath do
       end
       
       describe "#simple_moving_average" do
-        it "returns the proper simple moving average" do
-          StockMath.simple_moving_average(@prices, 10).to_f.should eql(22.22)
+        it "returns 22.22 as the SMA for all the prices" do
+          StockMath.simple_moving_average(@prices).to_f.should eql(22.22)
+        end
+        
+        it "returns 22.26 as the SMA for the last 5 prices" do
+          StockMath.simple_moving_average(@prices, 5).to_f.should eql(22.26)
         end
       end
       
