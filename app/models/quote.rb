@@ -93,4 +93,8 @@ class Quote < ActiveRecord::Base
     
     Quote.unscoped.where(symbol: symbol).where("date <= ?", date).limit(period).order("date DESC")[:close].reverse
   end
+  
+  def previous_quotes(period)
+    Quote.unscoped.where(symbol: symbol).where("date <= ?", date).limit(period).order("date DESC").reverse
+  end
 end
