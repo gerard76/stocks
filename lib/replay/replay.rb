@@ -4,7 +4,7 @@ class Replay
   attr_accessor :stocks, :cash, :from, :till, :current_quote
   
   # stats
-  attr_accessor :buy_count, :sell_count, :max, :min
+  attr_accessor :buy_count, :sell_count, :max, :min, :last_buy_price
   
   def initialize(from, till)
     self.cash   = INITITAL_CASH
@@ -52,6 +52,7 @@ class Replay
     self.buy_count += 1
     # puts "on #{current_quote.date} buy #{stocks} for #{current_quote.close} - value: #{value}"
     store_statistics
+    self.last_buy_price = current_quote.close
   end
   
   def sell
