@@ -1,17 +1,20 @@
 class Ema < Replay
   
-  attr_accessor :ema_period
+  attr_accessor :ema_period, :smooth
   
-  def initialize(ema_period, from = Time.new(2001), till = Time.new(2002))
+  def initialize(ema_period, smooth,from = Time.new(2001), till = Time.new(2002))
     self.ema_period = ema_period
+    self.smooth = smooth
     super(from, till)
   end
   
   def buy?
-    current_quote.close > current_quote.exponential_moving_average(ema_period) && stocks == 0
+    ema = current_quote.ema(ema_period) * (1 + smooth)
+    stocks == 0 && current_quote.close > ema
   end
   
   def sell?
-    current_quote.close < current_quote.exponential_moving_average(ema_period) && stocks > 0
+    ema = current_quote.ema(ema_period) * (1 - smooth)
+    stocks > 0 && current_quote.close < ema
   end
 end

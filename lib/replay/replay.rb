@@ -53,6 +53,8 @@ class Replay
     # puts "on #{current_quote.date} buy #{stocks} for #{current_quote.close} - value: #{value}"
     store_statistics
     self.last_buy_price = current_quote.close
+    puts "BUY on #{current_quote.date} for #{current_quote.close}"
+    
   end
   
   def sell
@@ -61,6 +63,8 @@ class Replay
     self.stocks = 0
     self.sell_count += 1
     store_statistics
+    
+    puts "SELL on #{current_quote.date} for #{current_quote.close}. Delta: #{current_quote.close - self.last_buy_price}"
   end
   
   def result

@@ -6,13 +6,24 @@ class Macd < Replay
   end
   
   def buy?
-    puts "buy: #{current_quote.macd} > #{current_quote.exponential_moving_average(9)}"
-    current_quote.macd > current_quote.exponential_moving_average(9) && stocks == 0
+    macds = []
+    current_quote.previous_quotes(9).each do |quote|
+      macds << quote.macd
+    end
+    # moet ema(9) van macd hebben, gebruik maar even sma
+    # puts "buy: #{current_quote.macd} > #{current_quote.exponential_moving_average(9)}"
+    # current_quote.macd > current_quote.exponential_moving_average(9) && stocks == 0
+    stocks == 0 && current_quote.macd > StockMath.sma(macds)
+    
   end
   
   def sell?
-    puts "sell: #{current_quote.macd} < #{current_quote.exponential_moving_average(9)} && #{stocks} > 0"
-    current_quote.macd < current_quote.exponential_moving_average(9) && stocks > 0
+    macds = []
+    current_quote.previous_quotes(9).each do |quote|
+      macds << quote.macd
+    end
+    # puts "sell: #{current_quote.macd} < #{current_quote.exponential_moving_average(9)} && #{stocks} > 0"
+    # current_quote.macd < current_quote.exponential_moving_average(9) && stocks > 0
+    stocks > 0 && current_quote.macd < StockMath.sma(macds)
   end
-  
 end
