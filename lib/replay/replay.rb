@@ -91,10 +91,14 @@ class Replay
   end
   
   def profit_per_year_in_percent
-    (profit_in_percent / (till.year - from.year)).round(2)
+    (profit_in_percent / years_run).round(2)
   end
   
   def operations_per_year
-    ((buy_count + sell_count) / (till.year - from.year)).round
+    ((buy_count + sell_count) / years_run).round
+  end
+  
+  def years_run
+    till.year - from.year + 1
   end
 end
