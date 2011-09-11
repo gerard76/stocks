@@ -39,26 +39,24 @@ describe Quote do
     end
   end
   
-  describe "private methods" do
-    describe "#select_period" do
-      before do
-        VCR.use_cassette('apple_quote') do
-          h = HistoricalQuote.new('AAPL', 30.days.ago)
-          h.fetch
-          h.save_quotes
-        end
-        
-        @prices = Quote.last.send(:select_period, 10)
+  describe "#previous_prices" do
+    before do
+      VCR.use_cassette('apple_quote') do
+        h = HistoricalQuote.new('AAPL', 30.days.ago)
+        h.fetch
+        h.save_quotes
       end
       
-      it "returns 10 elements" do
-        @prices.should have(10).prices
-      end
-      
-      it "returns last 10 quotes" do
-        @prices.last.to_f.should  eql(377.48)
-        @prices.first.to_f.should eql(383.58)
-      end
+      @prices = Quote.last.previous_prices(10)
+    end
+    
+    it "returns 10 elements" do
+      @prices.should have(10).prices
+    end
+    
+    it "returns last 10 quotes" do
+      @prices.last.to_f.should  eql(377.48)
+      @prices.first.to_f.should eql(383.58)
     end
   end
 end

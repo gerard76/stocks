@@ -2,7 +2,7 @@
 - !ruby/struct:VCR::HTTPInteraction
   request: !ruby/struct:VCR::Request
     method: :get
-    uri: http://ichart.yahoo.com:80/table.csv?s=AAPL&g=&ignore=.csv&a=7&b=11&c=2011&d=8&e=10&f=2011
+    uri: http://ichart.yahoo.com:80/table.csv?s=AAPL&g=&ignore=.csv&a=7&b=12&c=2011&d=8&e=11&f=2011
     body: 
     headers: 
   response: !ruby/struct:VCR::Response
@@ -11,7 +11,7 @@
       message: OK
     headers:
       date:
-      - Sat, 10 Sep 2011 06:07:09 GMT
+      - Sun, 11 Sep 2011 05:35:58 GMT
       p3p:
       - policyref="http://info.yahoo.com/w3c/p3p.xml", CP="CAO DSP COR CUR ADM DEV
         TAI PSA PSD IVAi IVDi CONi TELo OTPi OUR DELi SAMi OTRi UNRi PUBi IND PHY
@@ -63,8 +63,6 @@
       2011-08-15,379.63,384.97,378.09,383.41,16436700,383.41
 
       2011-08-12,378.07,379.64,374.23,376.99,18879800,376.99
-
-      2011-08-11,370.52,375.45,364.72,373.70,26482900,373.70
 
 '
     http_version: '1.1'
