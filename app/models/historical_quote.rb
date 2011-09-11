@@ -2,11 +2,11 @@ class HistoricalQuote
   attr_accessor :symbol, :from_date, :to_date, :interval, :quotes
   
   def initialize(symbol, from_date = 1.year.ago, to_date = Date.today, interval = :daily)
-    self.symbol = symbol
+    self.symbol    = symbol
     self.from_date = from_date
-    self.to_date = to_date
-    self.interval = self.interval
-    self.quotes = []
+    self.to_date   = to_date
+    self.interval  = self.interval
+    self.quotes    = []
   end
   
   def fetch

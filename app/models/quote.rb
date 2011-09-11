@@ -20,19 +20,19 @@ class Quote < ActiveRecord::Base
   end
   
   def simple_moving_average(period)
-    StockMath.simple_moving_average(select_period(period), period)
+    StockMath.simple_moving_average(previous_prices(period), period)
   end
   memoize :simple_moving_average
   alias :sma :simple_moving_average
   
   def exponential_moving_average(period)
-    StockMath.exponential_moving_average(select_period(5 * period), period)
+    StockMath.exponential_moving_average(previous_prices(5 * period), period)
   end
   memoize :exponential_moving_average
   alias :ema :exponential_moving_average
   
   def macd(short = 12, long = 26)
-    StockMath.macd(select_period(long + 100), short, long)
+    StockMath.macd(previous_prices(long + 100), short, long)
   end
   
   def best_sma_period(look_back_period, range_from = 5, range_to = 50)
@@ -62,7 +62,7 @@ class Quote < ActiveRecord::Base
   
   def best_ema_period(look_back_period, range_from = 5, range_to = 50)
     max_value, max_period = 0, 0
-    previous = previous_quotes(look_back_period)
+    previous = previous_prices(look_back_period)
     (range_from..range_to).each do |period|
       stocks, value, cash = 0, 0, 10000
       previous.each do |quote|
@@ -85,9 +85,7 @@ class Quote < ActiveRecord::Base
   end
   memoize :best_ema_period
   
-  private
-    
-  def select_period(period)
+  def previous_prices(period)
     count = Quote.where(symbol: symbol).where("date <= ?", date).count
     if count < period
       raise "Not enough quotes for calculation! #{period} needed, got #{count}"
