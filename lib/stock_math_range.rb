@@ -2,7 +2,10 @@ class StockMathRange
   class << self
     def ema(data, period)
       emas = [calculate_sma(data, period)]
-      data.slice(period..-1).each { |current| emas << calculate_ema(emas.last, current, period) }
+      
+      data.slice(period..-1).each do |current|
+        emas << calculate_ema(emas.last, current, period)
+      end
       
       emas
     end
@@ -21,7 +24,7 @@ class StockMathRange
     end
     
     def calculate_sma(data, period)
-      (data.pop(period).sum / period).to_f.round(2)
+      (data.slice(0..period).sum / period).to_f.round(2)
     end
   end
 end

@@ -46,7 +46,7 @@ class Quote < ActiveRecord::Base
   memoize :previous_prices
   
   def previous_quotes(period)
-    Quote.unscoped.where(symbol: symbol).where("date <= ?", date).limit(period).order("date DESC").reverse
+    Quote.unscoped.where(symbol: symbol).where("date < ?", date).limit(period).order("date DESC").reverse
   end
   memoize :previous_quotes
 end

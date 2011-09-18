@@ -3,14 +3,19 @@ class Ema < RangeReplay
   attr_accessor :ema_period, :smooth
   
   def initialize(ema_period, from = Time.new(2001), till = Time.new(2002))
-    quotes  = Quote.where(symbol: '^aex').where("date >= ?", from).where("date < ?", till)
+    q = Quote.where(symbol: '^aex').where("date >= ?", from).where("date < ?", till)
     extra_quotes = 250 + ema_period
+    # q.each { |s| puts [s.date, s.close.to_f.round(2)] }
     
-    self.quotes  = quotes.first.previous_quotes(extra_quotes) + quotes
-    signals = StockMathRange.ema(quotes.map(&:close), ema_period)
+    self.quotes  = q.first.previous_quotes(extra_quotes) + q
     
-    quotes.shift(extra_quotes)
-    signals.pop(quotes.length)
+    
+    self.signals = StockMathRange.ema(self.quotes.map(&:close), ema_period).pop(q.length)
+    
+    self.quotes.shift(extra_quotes)
+    
+    # puts signals.inspect
+    # quotes.each_with_index { |q, index| puts [q.date, signals[index]].inspect }
     
     super(quotes, signals, from, till)
   end

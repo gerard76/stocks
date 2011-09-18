@@ -57,7 +57,6 @@ class RangeReplay
     # puts "on #{current_quote.date} buy #{stocks} for #{current_quote.close} - value: #{value}"
     store_statistics
     self.last_buy_price = current_quote.close
-    puts "#{current_quote.close} > #{current_signal}"
     puts "BUY on #{current_quote.date} for #{current_quote.close}"
     
   end
@@ -68,8 +67,7 @@ class RangeReplay
     self.stocks = 0
     self.sell_count += 1
     store_statistics
-    puts "#{current_quote.close} < #{current_signal}"
-       
+    
     puts "SELL on #{current_quote.date} for #{current_quote.close}. Delta: #{(((current_quote.close - last_buy_price) / last_buy_price) * 100).round(2)}%"
   end
   
@@ -109,6 +107,6 @@ class RangeReplay
   end
   
   def years_run
-    (Time.now - 1.year.ago) / (3600 * 24 * 365)
+    (till - from) / (3600 * 24 * 365)
   end
 end
